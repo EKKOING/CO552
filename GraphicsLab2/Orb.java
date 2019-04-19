@@ -1,6 +1,9 @@
 import java.awt.*;
 import java.awt.image.*;
 import java.awt.geom.*;
+import java.io.*;
+import javax.imageio.*;
+
 
 public class Orb
 {
@@ -19,6 +22,7 @@ public class Orb
    private static int nextID = 1;
    
    private Color myColor;
+   private BufferedImage myImage;
    
    public Orb(double x, double y, 
       double Xspeed, double Yspeed)
@@ -40,6 +44,15 @@ public class Orb
       int b = (int) (Math.random() * 256);
       myColor = new Color(r, g, b);
       
+      try
+      {
+         InputStream is = getClass().getResourceAsStream("icon.png");
+         myImage = ImageIO.read(is);
+      }
+      catch(IOException ioe)
+      {
+         System.out.println(ioe);
+      }
    }
    
    public double getX()
@@ -143,8 +156,10 @@ public class Orb
       double topX = myX - radius;
       double topY = myY - radius;
    
-      Ellipse2D.Double spot = new Ellipse2D.Double(topX, topY, SIZE, SIZE);
-      g2.setColor(myColor);
-      g2.fill(spot);
+      //Ellipse2D.Double spot = new Ellipse2D.Double(topX, topY, SIZE, SIZE);
+      //g2.setColor(myColor);
+      //g2.fill(spot);
+      
+      g2.drawImage(myImage, (int) topX, (int) topY, null);
    }
 }

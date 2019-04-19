@@ -84,10 +84,36 @@ public class OrbCollection
             for(int idx = 0; idx < myOrbs.size(); idx++)
             {
                Orb o = myOrbs.get(idx);
+               checkForCollision(o);
                o.checkForBounce();
                o.updatePosition();
             } 
          }
       }
+      public void checkForCollision(Orb o)
+      {
+         double thisX = o.getX();
+         double thisY = o.getY();
+         Rectangle2D.Double oBox = new Rectangle2D.Double(thisX, thisY,
+            Orb.SIZE, Orb.SIZE);
+         for(int idx = 0; idx < myOrbs.size(); idx++)
+         {
+            Orb oth = myOrbs.get(idx);
+         
+            double othX = oth.getX();
+            double othY = oth.getY();
+            
+            if(o.getID() != oth.getID())
+            {    
+               if(oBox.intersects(othX, othY, Orb.SIZE + 0.5, Orb.SIZE + 0.5))
+               {
+                  o.bounceX();
+                  o.bounceY();
+               }
+            }
+         }
+      
+      }
+   
    }
 }

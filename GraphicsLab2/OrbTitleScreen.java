@@ -46,6 +46,13 @@ public class OrbTitleScreen extends JPanel
    {
       public void mousePressed(MouseEvent e)
       {
+         int mouseX = e.getX();
+         int mouseY = e.getY();
+         
+         if(myButton.contains(mouseX, mouseY))
+         {
+            myApp.switchScreen(OrbApp.ORB);
+         }
       
       }
       

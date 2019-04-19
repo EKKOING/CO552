@@ -20,6 +20,9 @@ public class OrbApp
 
    private JFrame myApp;
    private OrbScreen myOrbPanel;
+   private JPanel myAppPanel;
+   
+   private OrbTitleScreen myTitlePanel;
    
    private OrbCollection myCollection;
    
@@ -47,17 +50,35 @@ public class OrbApp
       isPaused = true;
       setupFrame();
    }
-
+   
    private void setupFrame()
    {
       myApp = new JFrame();
       myApp.setSize(APP_WIDTH, APP_HEIGHT);
       
+      myTitlePanel = new OrbTitleScreen(this);
+      
       myOrbPanel = new OrbScreen(this, myCollection);
       myOrbPanel.setFocusable(true);
       
-      myApp.add(myOrbPanel);
+      myAppPanel = new JPanel(new CardLayout());
+      myAppPanel.add(myTitlePanel, TITLE);
+      myAppPanel.add(myOrbPanel, ORB);
+      
+      myApp.add(myAppPanel);
       myApp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       myApp.setVisible(true);
    }   
+   
+   public void switchScreen(String whichScreen)
+   {
+      CardLayout layout = (CardLayout) myAppPanel.getLayout();
+      layout.show(myAppPanel, whichScreen);
+      
+      if(whichScreen == ORB)
+      {
+         myOrbPanel.requestFocusInWindow();
+      }
+   }
+
 }
